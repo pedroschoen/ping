@@ -1,1 +1,4 @@
-Programn to test the internet if the internet connection is on
+# test_connection
+
+Simple python script to write if the internet is working.
+
