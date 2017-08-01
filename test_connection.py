@@ -5,6 +5,11 @@ from urllib.error import HTTPError,URLError
 from datetime import datetime
 import time
 import os
+import argparse
+
+
+
+
 
 def check_internet(interval=60,urls=[r'http://www.google.com',r'https://github.com'],save_log=os.getcwd()):
     print('checking connection every '+str(interval/60)+' minutes')
@@ -26,13 +31,49 @@ def check_internet(interval=60,urls=[r'http://www.google.com',r'https://github.c
                 print (string_salvar +' '+str(url)+' OK')
             except (HTTPError, URLError):
                 salvar_log = open('log.txt','a+')
-                salvar_log.write(string_salvar+' '+str(url)+ ' ERRO \n')
+                salvar_log.write(string_salvar+' '+str(url)+ ' ERROR \n')
                 salvar_log.close()
-                print (string_salvar +' '+str(url)+ ' ERRO')
+                print (string_salvar +' '+str(url)+ ' ERROR')
     
                 
         time.sleep(interval)
         
+        
+        
+parser = argparse.ArgumentParser()
+parser.add_argument("-i","-interval",nargs='?',default='empty')
+parser.add_argument("-u","-url",nargs='?',default='empty')
+parser.add_argument("-s","-save",nargs='?',default='empty')
+
+args = parser.parse_args()
+print(args.u)
+if args.i == 'empty':
+    interval=60
+else:
+    try:
+        interval =  int(args.i)
+    except:
+        interval=60
+        
+if args.u == 'empty':
+    urls=[r'http://www.google.com',r'https://github.com']
+else:
+    try:
+        urls = args.u.split(',')
+        print(urls) 
+    except:
+        urls=[r'http://www.google.com',r'https://github.com']
+        
+if args.s == 'empty':
+    save_log=os.getcwd()
+else:
+    try:
+        save_log=args.s
+    except:
+        save_log=os.getcwd()
+        
+                
+        
 if __name__ == '__main__':
-    check_internet()
+    check_internet(interval=interval,urls=urls,save_log=save_log)
     
