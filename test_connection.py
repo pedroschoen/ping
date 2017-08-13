@@ -41,13 +41,12 @@ def check_internet(interval=60,urls=[r'http://www.google.com',r'https://github.c
         
         
 parser = argparse.ArgumentParser()
-parser.add_argument("-i","-interval",nargs='?',default='empty')
-parser.add_argument("-u","-url",nargs='?',default='empty')
-parser.add_argument("-s","-save",nargs='?',default='empty')
-
+parser.add_argument("-i","-interval",nargs='?',default=True)
+parser.add_argument("-u","-url",nargs='?',default=True)
+parser.add_argument("-s","-save",nargs='?',default=True)
 args = parser.parse_args()
-print(args.u)
-if args.i == 'empty':
+
+if args.i:
     interval=60
 else:
     try:
@@ -55,7 +54,7 @@ else:
     except:
         interval=60
         
-if args.u == 'empty':
+if args.u:
     urls=[r'http://www.google.com',r'https://github.com']
 else:
     try:
@@ -64,7 +63,7 @@ else:
     except:
         urls=[r'http://www.google.com',r'https://github.com']
         
-if args.s == 'empty':
+if args.s:
     save_log=os.getcwd()
 else:
     try:
