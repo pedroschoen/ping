@@ -1,15 +1,9 @@
-
-
 import urllib.request
 from urllib.error import HTTPError,URLError
 from datetime import datetime
 import time
 import os
 import argparse
-
-
-
-
 
 def check_internet(interval=60,urls=[r'http://www.google.com',r'https://github.com'],save_log=os.getcwd()):
     print('checking connection every '+str(interval/60)+' minutes')
@@ -37,8 +31,7 @@ def check_internet(interval=60,urls=[r'http://www.google.com',r'https://github.c
     
                 
         time.sleep(interval)
-        
-        
+     
         
 parser = argparse.ArgumentParser()
 parser.add_argument("-i","-interval",nargs='?',default=True)
