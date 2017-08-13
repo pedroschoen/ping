@@ -1,3 +1,5 @@
+DEFAULT_URLS = ['http://www.google.com', 'https://github.com']
+
 import urllib.request
 from urllib.error import HTTPError,URLError
 from datetime import datetime
@@ -5,7 +7,7 @@ import time
 import os
 import argparse
 
-def check_internet(interval=60,urls=[r'http://www.google.com',r'https://github.com'],save_log=os.getcwd()):
+def check_internet(interval=60,urls=DEFAULT_URLS,save_log=os.getcwd()):
     print('checking connection every '+str(interval/60)+' minutes')
     os.chdir(save_log)
     while True:
@@ -19,15 +21,14 @@ def check_internet(interval=60,urls=[r'http://www.google.com',r'https://github.c
                                                                         now.minute)
             try:
                 test = urllib.request.urlopen(url,timeout = 15) 
-                save_log = open('log.txt','a+')
-                save_log.write(   string_save+' '+str(url)+ ' OK \n')
-                save_log.close()
-                print (string_save +' '+str(url)+' OK')
+                with open('log.txt','a+') as save_log:
+                    save_log.write('%s %s OK \n' %(string_save,str(url)))
+               
+                print ('%s %s OK' %(string_save,str(url)))
             except (HTTPError, URLError):
-                save_log = open('log.txt','a+')
-                save_log.write(string_save+' '+str(url)+ ' ERROR \n')
-                save_log.close()
-                print (string_save +' '+str(url)+ ' ERROR')
+                with open('log.txt','a+') as save_log:
+                    save_log.write('%s %s ERROR \n' %(string_save,str(url)))
+                print ('%s %s ERROR' %(string_save,str(url)))
     
                 
         time.sleep(interval)
@@ -48,13 +49,13 @@ else:
         interval=60
         
 if args.u:
-    urls=[r'http://www.google.com',r'https://github.com']
+    urls=DEFAULT_URLS
 else:
     try:
         urls = args.u.split(',')
         print(urls) 
     except:
-        urls=[r'http://www.google.com',r'https://github.com']
+        urls=DEFAULT_URLS
         
 if args.s:
     save_log=os.getcwd()
