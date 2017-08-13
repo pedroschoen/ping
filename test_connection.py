@@ -12,22 +12,22 @@ def check_internet(interval=60,urls=[r'http://www.google.com',r'https://github.c
         for url in urls:
                 
             now = datetime.now()
-            string_salvar = "{:02d}/{:02d}/{:04d} {:02d}:{:02d}".format(now.day,
+            string_save = "{:02d}/{:02d}/{:04d} {:02d}:{:02d}".format(now.day,
                                                                         now.month,
                                                                         now.year,
                                                                         now.hour,
                                                                         now.minute)
             try:
                 test = urllib.request.urlopen(url,timeout = 15) 
-                salvar_log = open('log.txt','a+')
-                salvar_log.write(   string_salvar+' '+str(url)+ ' OK \n')
-                salvar_log.close()
-                print (string_salvar +' '+str(url)+' OK')
+                save_log = open('log.txt','a+')
+                save_log.write(   string_save+' '+str(url)+ ' OK \n')
+                save_log.close()
+                print (string_save +' '+str(url)+' OK')
             except (HTTPError, URLError):
-                salvar_log = open('log.txt','a+')
-                salvar_log.write(string_salvar+' '+str(url)+ ' ERROR \n')
-                salvar_log.close()
-                print (string_salvar +' '+str(url)+ ' ERROR')
+                save_log = open('log.txt','a+')
+                save_log.write(string_save+' '+str(url)+ ' ERROR \n')
+                save_log.close()
+                print (string_save +' '+str(url)+ ' ERROR')
     
                 
         time.sleep(interval)
@@ -64,8 +64,7 @@ else:
     except:
         save_log=os.getcwd()
         
-                
-        
+      
 if __name__ == '__main__':
     check_internet(interval=interval,urls=urls,save_log=save_log)
     
