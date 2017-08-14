@@ -11,7 +11,7 @@ DEFAULT_INTERVAL=60
 
 def ping(interval=DEFAULT_INTERVAL,
                    urls=DEFAULT_URLS,
-				   save_log=os.getcwd()):
+                   save_log=os.getcwd()):
     print(('checking connection every {} minutes').format(str(interval/60)))
     os.chdir(save_log)
     while True:
@@ -36,38 +36,20 @@ def ping(interval=DEFAULT_INTERVAL,
         time.sleep(interval)
      
         
-parser = argparse.ArgumentParser()
-parser.add_argument("-i","-interval",nargs='?',default=True)
-parser.add_argument("-u","-url",nargs='?',default=True)
-parser.add_argument("-s","-save",nargs='?',default=True)
-args = parser.parse_args()
 
-if args.i:
-    interval=DEFAULT_INTERVAL
-else:
-    try:
-        interval =  int(args.i)
-    except:
-        interval=DEFAULT_INTERVAL
-        
-if args.u:
-    urls=DEFAULT_URLS
-else:
-    try:
-        urls = args.u.split(',')
-        print(urls) 
-    except:
-        urls=DEFAULT_URLS
-        
-if args.s:
-    save_log=os.getcwd()
-else:
-    try:
-        save_log=args.s
-    except:
-        save_log=os.getcwd()
-        
-      
+
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-interval", "-i", nargs='?',default=DEFAULT_INTERVAL)
+    parser.add_argument("-urls", "-u", nargs='?',default=DEFAULT_URLS)
+    parser.add_argument("-save_log", "-s", nargs='?',default=os.getcwd())
+    args = parser.parse_args()
+
+    interval=int(args.interval)
+    urls = args.urls
+    if urls != DEFAULT_URLS:
+        urls = args.urls.split(',')
+    save_log = args.save_log
+    
     ping(interval=interval,urls=urls,save_log=save_log)
     
