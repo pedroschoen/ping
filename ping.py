@@ -1,11 +1,10 @@
 
-import urllib.request
-from urllib.error import HTTPError,URLError
-from datetime import datetime
-import time
-import os
 import argparse
-
+import urllib.request
+import os
+import time
+from datetime import datetime
+from urllib.error import HTTPError,URLError
 DEFAULT_URLS = ['http://www.google.com', 'https://github.com']
 DEFAULT_INTERVAL=60
 
